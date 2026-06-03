@@ -1,0 +1,224 @@
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 60%, #1a1610 0%, #0d0d0d 100%);
+}
+
+.hero__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 151, 90, 0.15);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: slowSpin 40s linear infinite;
+}
+
+.hero__ring:nth-child(2) {
+  width: 600px;
+  height: 600px;
+}
+
+.hero__ring:nth-child(3) {
+  width: 480px;
+  height: 480px;
+  border-color: rgba(184, 151, 90, 0.1);
+  animation-direction: reverse;
+  animation-duration: 28s;
+}
+
+.hero__ring:nth-child(4) {
+  width: 340px;
+  height: 340px;
+  border-color: rgba(184, 151, 90, 0.2);
+  animation-duration: 18s;
+}
+
+@keyframes slowSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.hero__watch {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #1a1610 0%,
+    #2a2418 10%,
+    #1a1610 20%,
+    #3a3020 30%,
+    #1a1610 40%,
+    #2a2418 50%,
+    #1a1610 60%,
+    #3a3020 70%,
+    #1a1610 80%,
+    #2a2418 90%,
+    #1a1610 100%
+  );
+  box-shadow:
+    0 0 0 2px rgba(184, 151, 90, 0.3),
+    0 0 0 8px rgba(184, 151, 90, 0.08),
+    0 0 60px rgba(184, 151, 90, 0.12),
+    inset 0 0 40px rgba(0, 0, 0, 0.8);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero__watch-face {
+  position: absolute;
+  inset: 16px;
+  border-radius: 50%;
+  background: #0a0a08;
+  border: 1px solid rgba(184, 151, 90, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__watch-center {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(184, 151, 90, 0.6);
+  position: relative;
+  z-index: 3;
+}
+
+.hero__hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.hero__hand--hour {
+  width: 2px;
+  height: 70px;
+  margin-left: -1px;
+}
+
+.hero__hand--min {
+  width: 1.5px;
+  height: 90px;
+  margin-left: -0.75px;
+}
+
+.hero__hand--sec {
+  width: 1px;
+  height: 100px;
+  margin-left: -0.5px;
+  background: #e04040;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 260px;
+}
+
+.hero__eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 1.2s 0.5s forwards;
+}
+
+.hero__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  animation: fadeUp 1.2s 0.8s forwards;
+}
+
+.hero__title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero__sub {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 1.5rem;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 1.2s 1.1s forwards;
+}
+
+.hero__scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 1.8s forwards;
+}
+
+.hero__scroll-cue span {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scaleY(0.5);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

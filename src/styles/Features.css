@@ -1,0 +1,128 @@
+.features {
+  height: 500vh;
+  position: relative;
+}
+
+.features__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--ink);
+}
+
+.features__track {
+  display: flex;
+  gap: 0;
+  height: 100vh;
+  width: 500vw;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.features__panel {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.features__panel--1 { background: var(--ink); }
+.features__panel--2 { background: #0f0e0c; }
+.features__panel--3 { background: #131210; }
+.features__panel--4 { background: #0d0c0a; }
+.features__panel--5 { background: #0a0908; }
+
+.features__panel-inner {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.features__panel-img {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.features__circle {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: conic-gradient(from 45deg, #1e1c16, #3a3626, #1e1c16, #2e2c22, #1e1c16);
+  box-shadow: 0 0 0 1px rgba(184, 151, 90, 0.2), 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features__circle-inner {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #0a0908;
+  border: 1px solid rgba(184, 151, 90, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features__panel-icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: var(--gold);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+
+.features__panel-text {
+  color: var(--white);
+}
+
+.features__panel-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  font-weight: 300;
+  color: rgba(184, 151, 90, 0.15);
+  line-height: 1;
+  margin-bottom: -0.5rem;
+}
+
+.features__panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.features__panel-body {
+  font-size: 0.75rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 300;
+}
+
+.features__panel-body strong {
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.features__panel-rule {
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1rem 0;
+}

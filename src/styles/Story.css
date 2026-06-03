@@ -1,0 +1,139 @@
+.story {
+  height: 400vh;
+  position: relative;
+}
+
+.story__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.story__bg-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  clip-path: circle(0% at 50% 50%);
+  transition: none;
+}
+
+.story__content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  max-width: 1100px;
+  padding: 0 4rem;
+  width: 100%;
+}
+
+.story__visual {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story__dial-outer {
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(184, 151, 90, 0.3),
+    inset 0 0 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.8) rotate(-15deg);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+.story__dial-outer.visible {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.story__dial-inner {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: #0f0e0c;
+  border: 1px solid rgba(184, 151, 90, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.story__dial-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.story__dial-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  color: var(--white);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+.story__text {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story__text.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.story__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.story__heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.story__body {
+  font-size: 0.78rem;
+  line-height: 2;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 380px;
+}
+
+.story__divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1.5rem 0;
+}
