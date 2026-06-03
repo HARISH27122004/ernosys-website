@@ -1,123 +1,149 @@
 import { useEffect, useRef } from 'react';
 import '../styles/Features.css';
 
-const panels = [
+const features = [
   {
-    num: '01',
-    roman: 'I',
-    title: 'The Ceramic\nArchitecture',
-    body: (
-      <>
-        High-tech ceramic, harder than steel and lighter than titanium.{' '}
-        <strong>Scratch-resistant</strong> by nature, forged under 1400°C of pressure — the same
-        process used in aerospace engineering.
-      </>
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </svg>
     ),
-    mod: 1,
+    title: 'Age-Appropriate Design',
+    body: 'Specially designed for children aged 5–14 with simple logic, intuitive assembly, and child-safe components at every step.',
+    tag: 'Safety First',
   },
   {
-    num: '02',
-    roman: 'II',
-    title: 'In-House\nMovement',
-    body: (
-      <>
-        The caliber 3125 oscillates at <strong>21,600 vibrations per hour</strong>. Hand-finished
-        bridges, bevelled and polished by artisans who dedicate years to perfecting a single
-        gesture.
-      </>
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
     ),
-    mod: 2,
+    title: 'Interactive Learning',
+    body: 'Encourages hands-on exploration instead of passive memorization — children learn by doing, building, and discovering.',
+    tag: 'STEM Focused',
   },
   {
-    num: '03',
-    roman: 'III',
-    title: 'Sapphire Crystal\nClarity',
-    body: (
-      <>
-        A dome of sapphire crystal, <strong>anti-reflective on both surfaces</strong>, framing the
-        dial like museum glass. Refractive index of 1.77 — vision undistorted by angle or light.
-      </>
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
     ),
-    mod: 3,
+    title: 'Concept Simplification',
+    body: 'Complex space science topics — planets, solar systems, orbital mechanics — made easy through activity-based methods.',
+    tag: 'Space Science',
   },
   {
-    num: '04',
-    roman: 'IV',
-    title: 'Water Resistance\nat Depth',
-    body: (
-      <>
-        Rated to <strong>200 metres</strong>. Each crown threaded to a triple gasket seal. The case
-        breathing under pressure — yet hermetically composed on the surface.
-      </>
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
     ),
-    mod: 4,
+    title: 'Safe & Eco-Friendly',
+    body: 'Built using child-safe, non-toxic, and environmentally friendly materials — because the planet matters as much as the kids.',
+    tag: 'Certified Safe',
   },
   {
-    num: '05',
-    roman: 'V',
-    title: 'Power Reserve\n& Precision',
-    body: (
-      <>
-        A <strong>70-hour power reserve</strong>, maintained by a bidirectional rotor in 18k rose
-        gold. Certified chronometric accuracy: ±2 seconds per day.
-      </>
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+        <path d="M7 8h.01M12 8h5M7 11h5M15 11h2" />
+      </svg>
     ),
-    mod: 5,
+    title: 'Curriculum Aligned',
+    body: 'Each toy maps directly to school science syllabi, making it a perfect complement to classroom learning for ages 5–14.',
+    tag: 'School Ready',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+    title: 'Parent & Teacher Guides',
+    body: 'Every kit ships with detailed parent and educator guides to make guided discovery easy, fun, and truly educational.',
+    tag: 'Co-Learning',
   },
 ];
 
 export default function Features() {
   const sectionRef = useRef(null);
-  const trackRef   = useRef(null);
+  const cardsRef   = useRef([]);
 
   useEffect(() => {
-    function onScroll() {
-      const section = sectionRef.current;
-      const track   = trackRef.current;
-      if (!section || !track) return;
-      const sy   = window.scrollY;
-      const wh   = window.innerHeight;
-      const top  = section.offsetTop;
-      const prog = Math.max(0, Math.min(1, (sy - top) / (section.offsetHeight - wh)));
-      track.style.transform = `translateX(-${prog * 400}vw)`;
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('features__card--visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    cardsRef.current.forEach((card) => card && observer.observe(card));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="features" className="features" ref={sectionRef}>
-      <div className="features__sticky">
-        <div className="features__track" ref={trackRef}>
-          {panels.map((p) => (
-            <div key={p.num} className={`features__panel features__panel--${p.mod}`}>
-              <div className="features__panel-inner">
-                <div className="features__panel-img">
-                  <div className="features__circle">
-                    <div className="features__circle-inner">
-                      <span className="features__panel-icon">{p.roman}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="features__panel-text">
-                  <div className="features__panel-num">{p.num}</div>
-                  <div className="features__panel-rule" />
-                  <h3 className="features__panel-title">
-                    {p.title.split('\n').map((line, i) => (
-                      <span key={i}>
-                        {line}
-                        {i === 0 && <br />}
-                      </span>
-                    ))}
-                  </h3>
-                  <p className="features__panel-body">{p.body}</p>
-                </div>
+    <section className="features" id="features" ref={sectionRef}>
+      {/* Background */}
+      <div className="features__bg" aria-hidden="true">
+        <div className="features__bg-grid" />
+        <div className="features__bg-glow features__bg-glow--left" />
+        <div className="features__bg-glow features__bg-glow--right" />
+        <div className="features__bg-nebula" />
+      </div>
+
+      <div className="features__container">
+
+        {/* ── Header ── */}
+        <div className="features__header">
+          <span className="features__label">Why Choose Us</span>
+          <h2 className="features__heading">
+            What Are Our
+            <span className="features__heading--accent"> Robotics Toys?</span>
+          </h2>
+          <p className="features__subtext">
+            Our robotics toys are educational products designed to teach space science
+            concepts such as planets, solar systems, and space exploration using
+            <strong> interactive and activity-based methods.</strong>
+          </p>
+          <button className="features__cta">
+            <span>View All Features</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* ── Cards grid ── */}
+        <div className="features__grid">
+          {features.map((f, i) => (
+            <div
+              key={f.title}
+              className="features__card"
+              ref={(el) => (cardsRef.current[i] = el)}
+              style={{ '--delay': `${i * 0.08}s` }}
+            >
+              <div className="features__card-top">
+                <div className="features__icon">{f.icon}</div>
+                <span className="features__tag">{f.tag}</span>
               </div>
+              <h3 className="features__card-title">{f.title}</h3>
+              <p className="features__card-body">{f.body}</p>
+              <div className="features__card-line" />
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
