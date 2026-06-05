@@ -53,10 +53,42 @@ const ITEMS = [
 ];
 
 /* ─────────────────────────────────────────
+   Floating particles (mirrored from Hero)
+───────────────────────────────────────── */
+const Particles = () => {
+  const particles = Array.from({ length: 28 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    duration: Math.random() * 14 + 8,
+    delay: Math.random() * 8,
+    opacity: Math.random() * 0.5 + 0.15,
+  }));
+
+  return (
+    <div className="gallery__particles" aria-hidden="true">
+      {particles.map((p) => (
+        <span
+          key={p.id}
+          className="gallery__particle"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            opacity: p.opacity,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────
    True touch-only device detection.
-   (hover: none) + (pointer: coarse) only
-   matches real touch screens — Chrome desktop
-   with touchpoints enabled still has hover:hover.
 ───────────────────────────────────────── */
 const isTouchOnly = () =>
   typeof window !== 'undefined' &&
@@ -64,17 +96,14 @@ const isTouchOnly = () =>
 
 /* ─────────────────────────────────────────
    GlitchCard
-   activeId / setActiveId passed from Gallery
-   so only one card is active at a time on mobile
 ───────────────────────────────────────── */
 const GlitchCard = ({ item, index, activeId, setActiveId }) => {
-  const hovered = activeId === item.id;          // desktop hover OR mobile active
+  const hovered = activeId === item.id;
   const [glitching, setGlitching] = useState(false);
   const [visible, setVisible]     = useState(false);
   const cardRef    = useRef(null);
   const glitchTimer = useRef(null);
 
-  /* Intersection observer — entrance animation */
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
@@ -84,7 +113,6 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
     return () => obs.disconnect();
   }, []);
 
-  /* Trigger glitch burst */
   const startGlitch = () => {
     setGlitching(true);
     clearTimeout(glitchTimer.current);
@@ -93,7 +121,6 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
 
   useEffect(() => () => clearTimeout(glitchTimer.current), []);
 
-  /* ── Desktop: mouse enter/leave ── */
   const handleMouseEnter = () => {
     if (isTouchOnly()) return;
     setActiveId(item.id);
@@ -105,10 +132,6 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
     startGlitch();
   };
 
-  /* ── Mobile: tap ──
-     Tapping this card activates it (and Gallery
-     deactivates any previously active card).
-     Tapping the same card again deactivates it.  */
   const handleTap = (e) => {
     if (!isTouchOnly()) return;
     e.preventDefault();
@@ -126,15 +149,12 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
       onMouseLeave={handleMouseLeave}
       onTouchEnd={handleTap}
     >
-      {/* Base image */}
       <img
         src={item.src}
         alt={item.title}
         className={`gallery__img gallery__img--base ${hovered ? 'gallery__img--hidden' : ''}`}
         loading="lazy"
       />
-
-      {/* Hover / active image */}
       <img
         src={item.hover}
         alt={`${item.title} — alternate`}
@@ -142,7 +162,6 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
         loading="lazy"
       />
 
-      {/* Glitch slices */}
       {glitching && (
         <div className="gallery__glitch" aria-hidden="true">
           <div className="gallery__glitch-slice gallery__glitch-slice--1" style={{ backgroundImage: `url(${hovered ? item.hover : item.src})` }} />
@@ -153,16 +172,13 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
         </div>
       )}
 
-      {/* Scanlines */}
       <div className="gallery__scanlines" aria-hidden="true" />
 
-      {/* Corner brackets */}
       <span className="gallery__corner gallery__corner--tl" />
       <span className="gallery__corner gallery__corner--tr" />
       <span className="gallery__corner gallery__corner--bl" />
       <span className="gallery__corner gallery__corner--br" />
 
-      {/* Info overlay */}
       <div className={`gallery__info ${hovered ? 'gallery__info--visible' : ''}`}>
         <span className="gallery__info-label">{item.label}</span>
         <h3 className="gallery__info-title">{item.title}</h3>
@@ -174,13 +190,23 @@ const GlitchCard = ({ item, index, activeId, setActiveId }) => {
 
 /* ─────────────────────────────────────────
    Gallery Section
-   activeId lives here — shared across all cards
 ───────────────────────────────────────── */
 const Gallery = () => {
   const [activeId, setActiveId] = useState(null);
 
   return (
     <section className="gallery" id="gallery">
+
+      {/* Background layer */}
+      <div className="gallery__bg" aria-hidden="true">
+        <div className="gallery__bg-grid" />
+        <div className="gallery__bg-glow gallery__bg-glow--left" />
+        <div className="gallery__bg-glow gallery__bg-glow--right" />
+        <div className="gallery__bg-nebula" />
+      </div>
+
+      <Particles />
+
       <div className="gallery__grid">
         {ITEMS.map((item, i) => (
           <GlitchCard

@@ -21,10 +21,85 @@
 
 /* ── Section wrapper ── */
 .gallery {
-  background: transparent;
+  background: #050916;
   padding: 100px 3rem 120px;
   position: relative;
   overflow: hidden;
+}
+
+/* ════════════════════════════════
+   BACKGROUND LAYERS (Hero-style)
+════════════════════════════════ */
+.gallery__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gallery__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79, 195, 247, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
+}
+
+.gallery__bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
+}
+
+.gallery__bg-glow--left {
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: -150px;
+  background: radial-gradient(circle, #1565c0, transparent 70%);
+}
+
+.gallery__bg-glow--right {
+  width: 500px;
+  height: 500px;
+  bottom: -80px;
+  right: -100px;
+  background: radial-gradient(circle, #00b0ff, transparent 70%);
+}
+
+.gallery__bg-nebula {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 40% 30% at 70% 30%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 20% 70%, rgba(21, 101, 192, 0.1) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════
+   PARTICLES (Hero-style)
+════════════════════════════════ */
+.gallery__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gallery__particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #4fc3f7;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0%   { transform: translateY(0) scale(1);       opacity: inherit; }
+  50%  { transform: translateY(-60px) scale(1.3); }
+  100% { transform: translateY(0) scale(1);       opacity: inherit; }
 }
 
 /* ── Section header ── */
@@ -53,12 +128,14 @@
 
 .gallery__badge-dot {
   display: inline-block;
-  width: 6px; height: 6px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--g-cyan);
   box-shadow: 0 0 8px var(--g-cyan);
   animation: dotBlink 2s ease-in-out infinite;
 }
+
 @keyframes dotBlink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
 .gallery__heading {
@@ -70,6 +147,7 @@
   line-height: 1.1;
   margin-bottom: 0.8rem;
 }
+
 .gallery__heading--accent {
   background: linear-gradient(90deg, #a8d8ff, #00e5ff);
   -webkit-background-clip: text;
@@ -89,20 +167,19 @@
 
 /* ══════════════════════════════════════
    MOSAIC GRID — 3 columns · 2 rows
-   Same structure preserved at ALL sizes
 ══════════════════════════════════════ */
 .gallery__grid {
   position: relative;
   z-index: 1;
   display: grid;
-  max-width:90%;
+  max-width: 90%;
   margin-inline: auto;
   gap: var(--gap);
   grid-template-columns: 1fr 1.4fr 1fr;
   grid-template-rows: 300px 260px;
 }
 
-/* ── Cell placement — never changes ── */
+/* ── Cell placement ── */
 .gallery__card--tall                  { grid-column: 1; grid-row: 1 / 3; }
 .gallery__card--wide                  { grid-column: 2; grid-row: 1;     }
 .gallery__card--normal:nth-of-type(3) { grid-column: 3; grid-row: 1;     }
@@ -145,9 +222,10 @@
 .gallery__img {
   position: absolute;
   inset: 0;
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transition: opacity 0.05s; /* nearly instant — glitch handles transition */
+  transition: opacity 0.05s;
 }
 
 .gallery__img--base   { opacity: 1; }
@@ -156,7 +234,7 @@
 .gallery__img--shown  { opacity: 1; }
 
 /* ══════════════════════════════════════
-   GLITCH EFFECT  (original, unchanged)
+   GLITCH EFFECT
 ══════════════════════════════════════ */
 .gallery__glitch {
   position: absolute;
@@ -166,25 +244,28 @@
   overflow: hidden;
 }
 
-/* horizontal slice strips */
 .gallery__glitch-slice {
   position: absolute;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   background-size: cover;
   background-position: center;
   mix-blend-mode: screen;
 }
 
 .gallery__glitch-slice--1 {
-  top: 15%; height: 12%;
+  top: 15%;
+  height: 12%;
   animation: sliceShift1 0.6s steps(2) forwards;
 }
 .gallery__glitch-slice--2 {
-  top: 42%; height: 8%;
+  top: 42%;
+  height: 8%;
   animation: sliceShift2 0.6s steps(3) forwards;
 }
 .gallery__glitch-slice--3 {
-  top: 68%; height: 10%;
+  top: 68%;
+  height: 10%;
   animation: sliceShift3 0.6s steps(2) forwards;
 }
 
@@ -232,13 +313,13 @@
   0%  { transform: translate(-6px, 2px);  opacity: 0.55; mix-blend-mode: screen; filter: hue-rotate(0deg) saturate(6) brightness(1.4); }
   30% { transform: translate(8px, -3px);  opacity: 0.4; }
   60% { transform: translate(-3px, 4px);  opacity: 0.5; }
-  100%{ transform: translate(0); opacity: 0; }
+  100%{ transform: translate(0);          opacity: 0; }
 }
 @keyframes rgbB {
   0%  { transform: translate(6px, -2px);  opacity: 0.45; filter: hue-rotate(180deg) saturate(6) brightness(1.3); }
   30% { transform: translate(-8px, 4px);  opacity: 0.4; }
   60% { transform: translate(3px, -3px);  opacity: 0.35; }
-  100%{ transform: translate(0); opacity: 0; }
+  100%{ transform: translate(0);          opacity: 0; }
 }
 
 /* ── Scanlines ── */
@@ -262,7 +343,8 @@
 /* ── Corner brackets ── */
 .gallery__corner {
   position: absolute;
-  width: 16px; height: 16px;
+  width: 16px;
+  height: 16px;
   z-index: 10;
   pointer-events: none;
   opacity: 0;
@@ -278,7 +360,9 @@
 /* ── Info overlay ── */
 .gallery__info {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 9;
   padding: 1.4rem 1.2rem 1rem;
   background: linear-gradient(to top, rgba(2,8,22,0.95) 0%, rgba(2,8,22,0.6) 60%, transparent 100%);
@@ -314,7 +398,8 @@
 /* ── Unit badge (top-left) ── */
 .gallery__badge {
   position: absolute;
-  top: 12px; left: 12px;
+  top: 12px;
+  left: 12px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -331,8 +416,7 @@
 }
 
 /* ══════════════════════════════════════
-   RESPONSIVE — row heights shrink,
-   3-column mosaic NEVER collapses
+   RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width: 1024px) {
   .gallery { padding: 80px 1.5rem 100px; }

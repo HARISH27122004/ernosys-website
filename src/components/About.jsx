@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import '../styles/About.css';
 
+
 export default function About() {
   const sectionRef = useRef(null);
   const bgRef      = useRef(null);
