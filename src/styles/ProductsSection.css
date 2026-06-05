@@ -1,0 +1,411 @@
+/* ── Google Fonts — add to your index.html ──────────────────────────────────
+   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+*/
+
+/* ═══════════════════════════════════════════
+   CSS VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --ps-cyan:        #00d4ff;
+  --ps-cyan-glow:   rgba(0, 212, 255, 0.25);
+  --ps-cyan-border: rgba(0, 212, 255, 0.55);
+  --ps-card-bg:     rgba(6, 18, 42, 0.82);
+  --ps-white:       #ffffff;
+  --ps-muted:       rgba(255, 255, 255, 0.70);
+  --ps-navy:        #020c1b;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION
+═══════════════════════════════════════════ */
+.ps-section {
+  position: relative;
+  padding: 90px 48px 100px;
+  overflow: hidden;
+  font-family: 'Exo 2', sans-serif;
+
+  /* ── DARK NAVY BASE — never transparent ── */
+  background-color: #050916 !important;
+
+  /* ── GRID LINES over solid dark base ── */
+  background-image:
+    linear-gradient(rgba(0, 190, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 190, 255, 0.06) 1px, transparent 1px) !important;
+  background-size: 60px 60px !important;
+  background-repeat: repeat !important;
+}
+
+/* ── Radial depth glows — absolutely positioned so they
+      never affect the base colour ── */
+.ps-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 110% 60% at 50% -5%,  rgba(0, 55, 130, 0.50) 0%, transparent 65%),
+    radial-gradient(ellipse  55% 40% at 85% 90%,  rgba(0, 25,  75, 0.30) 0%, transparent 60%),
+    radial-gradient(ellipse  45% 35% at 10% 85%,  rgba(0, 25,  75, 0.20) 0%, transparent 55%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Subtle centre glow behind the cards ── */
+.ps-overlay-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 65% 45% at 50% 60%,
+    rgba(0, 140, 255, 0.07) 0%,
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Particle canvas ── */
+.ps-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADER
+═══════════════════════════════════════════ */
+.ps-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.ps-heading {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(26px, 3.6vw, 42px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.ps-heading-accent {
+  color: var(--ps-cyan);
+}
+
+.ps-subheading {
+  margin: 16px auto 0;
+  max-width: 560px;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ps-muted);
+  line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════════
+   CARDS WRAPPER — CSS Grid (equal heights)
+═══════════════════════════════════════════ */
+.ps-cards-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto 52px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* ═══════════════════════════════════════════
+   PRODUCT CARD — named grid rows for
+   pixel-perfect alignment across all 3 cards
+═══════════════════════════════════════════ */
+.ps-card {
+  display: grid;
+  grid-template-rows:
+    [logo]  auto
+    [icon]  auto
+    [title] auto
+    [desc]  1fr;
+
+  background: var(--ps-card-bg);
+  border: 1.5px solid var(--ps-cyan-border);
+  border-radius: 18px;
+  padding: 32px 28px 36px;
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+
+  transition:
+    transform 0.32s ease,
+    box-shadow 0.32s ease,
+    border-color 0.32s ease;
+}
+
+/* corner bracket — top left */
+.ps-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 56px; height: 56px;
+  border-top: 2px solid var(--ps-cyan);
+  border-left: 2px solid var(--ps-cyan);
+  border-radius: 18px 0 0 0;
+  opacity: 0.65;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* corner bracket — bottom right */
+.ps-corner-br {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 56px; height: 56px;
+  border-bottom: 2px solid var(--ps-cyan);
+  border-right: 2px solid var(--ps-cyan);
+  border-radius: 0 0 18px 0;
+  opacity: 0.65;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  display: block;
+}
+
+.ps-card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 0 52px var(--ps-cyan-glow),
+    0 24px 48px rgba(0, 0, 0, 0.6);
+  border-color: var(--ps-cyan);
+}
+
+.ps-card:hover::before,
+.ps-card:hover .ps-corner-br {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   SCAN LINE ANIMATION
+═══════════════════════════════════════════ */
+@keyframes ps-scan {
+  0%   { top: -10%; }
+  100% { top: 110%; }
+}
+
+.ps-scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent);
+  top: -10%;
+  animation: ps-scan 4.5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════
+   LOGO CHIP — grid row: logo
+═══════════════════════════════════════════ */
+.ps-card-logo {
+  grid-row: logo;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 30px;
+  padding: 5px 14px 5px 7px;
+  margin-bottom: 26px;
+  position: relative;
+  z-index: 1;
+}
+
+.ps-logo-icon {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0055bb, #00d4ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.ps-card-logo span {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: var(--ps-cyan);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   CARD ICON — grid row: icon
+═══════════════════════════════════════════ */
+.ps-card-icon {
+  grid-row: icon;
+  justify-self: center;
+  align-self: center;
+  width: 56px; height: 56px;
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.ps-card-icon svg {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 0 8px rgba(0,212,255,0.75));
+}
+
+/* ═══════════════════════════════════════════
+   CARD TITLE — grid row: title
+═══════════════════════════════════════════ */
+.ps-card-title {
+  grid-row: title;
+  align-self: start;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ps-cyan);
+  letter-spacing: 0.03em;
+  margin: 0 0 14px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   CARD DESC — grid row: desc
+═══════════════════════════════════════════ */
+.ps-card-desc {
+    grid-row: desc;
+    align-self: start;
+    font-size: 13.5px;
+    /* font-weight: 700; */
+    color:white;
+    line-height: 1.8;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════
+   CTA BUTTON
+═══════════════════════════════════════════ */
+.ps-cta {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.ps-btn {
+    display: inline-block;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #f7f9f9;
+    padding: 14px 52px;
+    border: 1.5px solid var(--ps-cyan-border);
+    border-radius: 6px;
+    background: rgb(21 22 22 / 63%);
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.28s ease, box-shadow 0.28s ease;
+
+}
+
+.ps-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.ps-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ps-cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.ps-btn:hover {
+  color: var(--ps-navy);
+  box-shadow: 0 0 32px var(--ps-cyan-glow);
+}
+
+.ps-btn:hover::before {
+  transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .ps-section {
+    padding: 60px 24px 72px;
+  }
+
+  .ps-cards-wrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ps-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ps-card-logo,
+  .ps-card-icon,
+  .ps-card-title,
+  .ps-card-desc {
+    grid-row: unset;
+    align-self: unset;
+    justify-self: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .ps-heading    { font-size: 22px; }
+  .ps-subheading { font-size: 13.5px; }
+}
+.SectionOuter {
+  background: url('https://images.stockcake.com/public/3/6/b/36b2787c-b08b-468f-be6c-7c256b0a0286_large/futuristic-robot-portrait-stockcake.jpg');
+  background-size: cover;      /* Fill the entire div */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat;/* Prevent repeating */
+  padding: 25px;
+  border-radius: 10px;
+}
+.ps-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+  padding: 24px;
+}

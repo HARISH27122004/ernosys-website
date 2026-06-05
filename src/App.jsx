@@ -6,6 +6,8 @@ import About          from './components/About';
 import Features from './components/Features';
 import Services from './components/Services';
 import Gallery from './components/Gallery';
+import AboutUs from './components/AboutUs';
+import ProductsSection from './components/ProductsSection';
 
 
 export default function App() {
@@ -13,10 +15,12 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      {/* <AboutUs/> */}
       <Gallery/>
       <About/>
       <Features/>
       <Services/>
+      <ProductsSection/>
       <Footer />
     </>
   );

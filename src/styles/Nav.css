@@ -1,154 +1,404 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Exo+2:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Exo+2:wght@300;400;500;600&display=swap');
 
+/* ═══════════════════════════════════════════
+   VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --nav-h:        72px;
+  --accent:       #38b2f8;
+  --cyan:         #00e5ff;
+  --text:         rgba(200, 225, 255, 0.85);
+  --white:        #ffffff;
+
+  /* Osmo menu panel colours */
+  --menu-padding:    2em;
+  --color-primary:   #38b2f8;           /* accent — used on eyebrow numbers  */
+  --color-dark:      #e8f0ff;           /* menu link text                    */
+  --color-neutral-800: #071040;         /* menu link hover bg                */
+  --color-neutral-300: #0a1240;         /* base panel  (panel 3)             */
+  --color-neutral-100: #0d1880;         /* mid panel   (panel 2)             */
+  --color-panel-accent: #1565c0;        /* accent panel (panel 1)            */
+}
+
+/* ═══════════════════════════════════════════
+   NAVBAR  (desktop — unchanged)
+═══════════════════════════════════════════ */
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5rem;
-  height: 72px;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.3s ease,
-              backdrop-filter 0.3s ease,
-              box-shadow 0.3s ease;
-
-  /* Base glassmorphism */
-  background: rgba(10, 10, 40, 0.35);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  background: rgba(10, 10, 40, 0.4);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(100, 160, 255, 0.15);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1),
+              background 0.3s ease, box-shadow 0.3s ease;
 }
-
-.navbar--visible {
-  transform: translateY(0);
-}
-
-.navbar--hidden {
-  transform: translateY(-100%);
-}
-
+.navbar--visible  { transform: translateY(0); }
+.navbar--hidden   { transform: translateY(-100%); }
 .navbar--scrolled {
-  background: rgba(5, 5, 30, 0.65);
-  box-shadow: 0 4px 40px rgba(0, 100, 255, 0.15), 0 1px 0 rgba(100, 160, 255, 0.2);
+  background: rgba(5, 5, 30, 0.8);
+  box-shadow: 0 4px 40px rgba(0,100,255,0.15), 0 1px 0 rgba(100,160,255,0.2);
 }
 
-/* ── Logo ── */
+/* Logo */
 .navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  text-decoration: none;
+  display: flex; align-items: center; gap: 0.5rem;
+  z-index: 600; position: relative;
 }
-
 .navbar__logo-icon {
-  font-size: 1.5rem;
-  color: #4fc3f7;
+  font-size: 1.5rem; color: #4fc3f7;
   filter: drop-shadow(0 0 6px #00aaff88);
   animation: pulseIcon 3s ease-in-out infinite;
 }
-
 @keyframes pulseIcon {
-  0%, 100% { filter: drop-shadow(0 0 6px #00aaff88); }
-  50%       { filter: drop-shadow(0 0 14px #00aaffcc); }
+  0%,100% { filter: drop-shadow(0 0 6px #00aaff88); }
+  50%      { filter: drop-shadow(0 0 14px #00aaffcc); }
 }
-
 .navbar__logo-text {
   font-family: 'Orbitron', monospace;
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: 0.18em;
+  font-weight: 800; font-size: 1.1rem; letter-spacing: 0.18em;
   background: linear-gradient(90deg, #a8d8ff, #4fc3f7, #00e5ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Nav links ── */
+/* Desktop links */
 .navbar__links {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 2.2rem;
-  margin: 0;
-  padding: 0;
+  list-style: none; display: flex; align-items: center;
+  gap: 2.2rem; margin: 0; padding: 0;
 }
-
 .navbar__link {
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: rgba(200, 225, 255, 0.8);
-  text-decoration: none;
-  text-transform: uppercase;
-  position: relative;
-  transition: color 0.25s;
+  font-size: 0.88rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text); text-decoration: none;
+  position: relative; transition: color 0.25s;
 }
-
 .navbar__link::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -4px;
-  width: 0;
-  height: 2px;
+  content: ''; position: absolute;
+  left: 50%; bottom: -4px;
+  width: 0; height: 2px;
   background: linear-gradient(90deg, #4fc3f7, #00e5ff);
-  border-radius: 2px;
-  transform: translateX(-50%);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px; transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
 }
+.navbar__link:hover { color: #a8d8ff; }
+.navbar__link:hover::after { width: 100%; }
 
-.navbar__link:hover {
-  color: #a8d8ff;
-}
+/* Desktop action buttons */
+.navbar__actions--desktop { display: flex; gap: 0.75rem; }
 
-.navbar__link:hover::after {
-  width: 100%;
-}
-
-/* ── Action buttons ── */
-.navbar__actions {
-  display: flex;
-  gap: 0.75rem;
-}
-
+/* Shared button */
 .navbar__btn {
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.45rem 1.3rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.25s;
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.45rem 1.3rem; border-radius: 6px;
+  cursor: pointer; transition: all 0.25s;
 }
-
 .navbar__btn--outline {
   background: transparent;
-  border: 1.5px solid rgba(79, 195, 247, 0.6);
+  border: 1.5px solid rgba(79,195,247,0.6);
   color: #a8d8ff;
 }
-
 .navbar__btn--outline:hover {
-  background: rgba(79, 195, 247, 0.12);
-  border-color: #4fc3f7;
-  box-shadow: 0 0 12px rgba(79, 195, 247, 0.25);
+  background: rgba(79,195,247,0.12); border-color: #4fc3f7;
+  box-shadow: 0 0 12px rgba(79,195,247,0.25);
 }
-
 .navbar__btn--filled {
   background: linear-gradient(135deg, #1565c0, #0288d1);
-  border: 1.5px solid rgba(79, 195, 247, 0.4);
-  color: #fff;
-  box-shadow: 0 2px 14px rgba(2, 136, 209, 0.35);
+  border: 1.5px solid rgba(79,195,247,0.4); color: #fff;
+  box-shadow: 0 2px 14px rgba(2,136,209,0.35);
 }
-
 .navbar__btn--filled:hover {
   background: linear-gradient(135deg, #1976d2, #039be5);
-  box-shadow: 0 4px 20px rgba(2, 136, 209, 0.5);
-  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(2,136,209,0.5); transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   HAMBURGER BUTTON  (Osmo-style)
+═══════════════════════════════════════════ */
+.menu-button {
+  display: none;                    /* shown only on mobile via media query */
+  align-items: center;
+  gap: 0.625em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin: -1em;
+  padding: 1em;
+  position: relative;
+  z-index: 600;
+  color: var(--white);
+}
+
+/* Two-line text wrap: "Menu" on top, "Close" below.
+   Height clips to one line; GSAP scrolls yPercent to swap them. */
+.menu-button-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 1.125em;      /* exactly one line tall */
+  overflow: hidden;
+}
+.menu-btn-label {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.125em;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* + icon that GSAP rotates to × */
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.65, 0.05, 0, 1);
+}
+.menu-button-icon {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+@media (hover: hover) {
+  .menu-button:hover .icon-wrap { transform: rotate(90deg); }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE NAV WRAPPER  (Osmo: .nav)
+═══════════════════════════════════════════ */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  width: 100%;
+  height: 100vh;
+  /* display:none set by GSAP on mount */
+}
+
+/* Dark overlay behind the panel */
+.m-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 20, 0.7);
+  cursor: pointer;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════
+   MENU PANEL  (Osmo: .menu)
+   Slides in from the right; 35em wide on desktop,
+   full width on mobile.
+═══════════════════════════════════════════ */
+.m-menu {
+  position: absolute;
+  top: 0; right: 0;
+  width: 35em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: calc(3 * var(--menu-padding));
+  padding-bottom: var(--menu-padding);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* ── Three stacked bg panels ── */
+.m-menu-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.m-bg-panel {
+  position: absolute;
+  inset: 0;
+  border-top-left-radius: 1.25em;
+  border-bottom-left-radius: 1.25em;
+  /* xPercent:101 set by GSAP on mount */
+}
+.m-bg-panel--first  { background: var(--color-panel-accent); }   /* wipes in 1st */
+.m-bg-panel--second { background: var(--color-neutral-100); }    /* wipes in 2nd */
+.m-bg-panel--base   { background: var(--color-neutral-300); }    /* wipes in 3rd — final bg */
+
+/* ── Content layer ── */
+.m-menu-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 5em;
+  overflow: auto;
+}
+
+/* ── Nav list ── */
+.m-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* Overflow hidden on item = clips the yPercent reveal of the link */
+.m-list__item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* The link is the element GSAP animates (yPercent + rotation) */
+.m-list__link {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  width: 100%;
+  padding: 0.75em var(--menu-padding);
+  text-decoration: none;
+  position: relative;
+}
+
+/* Large heading text — Osmo uses text-shadow for hover ghost */
+.m-list__heading {
+  position: relative;
+  z-index: 1;
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.5rem, 6vw, 5.625em);
+  font-weight: 800;
+  line-height: 0.75;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  /* Ghost text shows below on hover (Osmo pattern) */
+  text-shadow: 0px 1em 0px rgba(232, 240, 255, 0.3);
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+  margin: 0;
+}
+
+/* Eyebrow number */
+.m-list__num {
+  position: relative;
+  z-index: 1;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Hover fill bg — scales up from bottom (Osmo pattern) */
+.m-link-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-neutral-800);
+  transform-origin: 50% 100%;
+  transform: scale3d(1, 0, 1);
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+}
+
+@media (hover: hover) {
+  .m-list__link:hover .m-list__heading {
+    transform: translateY(-1em);
+    transition-delay: 0.1s;
+  }
+  .m-list__link:hover .m-link-bg {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* ── ✕ Close button inside panel ── */
+.m-close-btn {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  z-index: 10;           /* above all three bg panels + content */
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(56, 178, 248, 0.12);
+  border: 1.5px solid rgba(56, 178, 248, 0.35);
+  /* border-radius: 50%; */
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  /* GSAP controls visibility — starts autoAlpha:0 */
+}
+.m-close-btn:hover {
+  background: rgba(56, 178, 248, 0.22);
+  border-color: var(--color-primary);
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* ── Footer (actions / socials area) ── */
+.m-footer {
+  padding-left: var(--menu-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+  align-items: flex-start;
+}
+.m-footer__label {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.875em;
+  color: rgba(232, 240, 255, 0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.m-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1068px) {
+  .navbar__links,
+  .navbar__actions--desktop { display: none; }
+  .menu-button              { display: flex; }   /* show Osmo-style hamburger */
+  .navbar                   { padding: 0 1.2rem; }
+
+  /* Panel goes full-width on mobile */
+  .m-menu {
+    width: 100%;
+    padding-top: calc(6 * var(--menu-padding));
+  }
+  /* No rounded corners on mobile (panel fills full width) */
+  .m-bg-panel {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  /* Link item fixed height on mobile */
+  .m-list__item { height: 3.5em; }
+  /* Slightly smaller heading */
+  .m-list__heading { font-size: 3.5em; }
+}
+
+@media (max-width: 479px) {
+  .m-menu {
+    padding-top: calc(7 * var(--menu-padding));
+    padding-bottom: calc(2 * var(--menu-padding));
+  }
+}
+
+@media (min-width: 1069px) {
+  /* Hide the full-screen nav wrapper on desktop */
+  .mobile-nav { display: none !important; }
+  .menu-button { display: none; }
 }

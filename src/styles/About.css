@@ -1,34 +1,43 @@
-/* ── About Section — mirrors Hero aesthetic ── */
+/* ── About Section — background mirrors AboutUs exactly ── */
 
-.about {
-  height: 400vh;
-  position: relative;
+:root {
+  --clr-bg:       #050916;
+  --clr-navy:     #080f2e;
+  --clr-blue:     #1565c0;
+  --clr-accent:   #00e5ff;
+  --clr-sky:      #4fc3f7;
+  --clr-text:     #cde4ff;
+  --clr-muted:    rgba(180, 210, 255, 0.65);
+  --font-display: 'Orbitron', monospace;
+  --font-body:    'Exo 2', sans-serif;
 }
 
-.about__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+/* ════════════════════════════════
+   SECTION
+════════════════════════════════ */
+.about {
+  position: relative;
+  background: var(--clr-bg);          /* #050916 — same as AboutUs .au */
+  font-family: var(--font-body);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 100px 3rem;
+  min-height: 100vh;
   overflow: hidden;
-  background: #4FC3F7;
-  font-family: var(--font-body, 'Exo 2', sans-serif);
 }
 
-/* ── Scroll-reveal dark panel ── */
-.about__bg-panel {
+/* ════════════════════════════════
+   BACKGROUND LAYERS  (1:1 with .au__bg in AboutUs)
+════════════════════════════════ */
+.about__bg {
   position: absolute;
   inset: 0;
-  background: var(--clr-navy, #080f2e);
-  clip-path: circle(0% at 50% 50%);
-  transition: none;
+  pointer-events: none;
   z-index: 0;
-  overflow: hidden;
 }
 
-/* Grid texture (same as hero) */
+/* Grid texture */
 .about__bg-grid {
   position: absolute;
   inset: 0;
@@ -36,7 +45,7 @@
     linear-gradient(rgba(79, 195, 247, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px);
   background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
 }
 
 /* Ambient glows */
@@ -57,15 +66,18 @@
   background: radial-gradient(circle, #00b0ff, transparent 70%);
 }
 
+/* Nebula layer */
 .about__bg-nebula {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 40% 30% at 30% 30%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 30% 40% at 70% 70%, rgba(21, 101, 192, 0.10) 0%, transparent 70%);
+    radial-gradient(ellipse 40% 30% at 70% 30%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 20% 70%, rgba(21, 101, 192, 0.10) 0%, transparent 70%);
 }
 
-/* ── Particles ── */
+/* ════════════════════════════════
+   PARTICLES  (1:1 with .au particles in AboutUs)
+════════════════════════════════ */
 .about__particles {
   position: absolute;
   inset: 0;
@@ -82,12 +94,14 @@
 }
 
 @keyframes aboutFloatParticle {
-  0%   { transform: translateY(0) scale(1);      opacity: inherit; }
+  0%   { transform: translateY(0) scale(1);       opacity: inherit; }
   50%  { transform: translateY(-60px) scale(1.3); }
-  100% { transform: translateY(0) scale(1);      opacity: inherit; }
+  100% { transform: translateY(0) scale(1);       opacity: inherit; }
 }
 
-/* ── Layout ── */
+/* ════════════════════════════════
+   CONTENT LAYOUT
+════════════════════════════════ */
 .about__content {
   position: relative;
   z-index: 2;
@@ -96,23 +110,16 @@
   gap: 5rem;
   align-items: center;
   max-width: 1100px;
-  padding: 0 3rem;
   width: 100%;
 }
 
-/* ── Visual — robot circle ── */
+/* ════════════════════════════════
+   VISUAL — robot circle
+════════════════════════════════ */
 .about__visual {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transform: scale(0.85) rotate(-12deg);
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
-}
-
-.about__visual.visible {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
 }
 
 .about__circle-wrapper {
@@ -143,13 +150,11 @@
   border: 1px solid rgba(79, 195, 247, 0.2);
   animation: aboutSpinRing linear infinite;
 }
-
 .about__circle-ring--1 {
   width: 340px; height: 340px;
   border-style: dashed;
   animation-duration: 28s;
 }
-
 .about__circle-ring--2 {
   width: 420px; height: 420px;
   border-color: rgba(0, 229, 255, 0.1);
@@ -161,7 +166,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* The image inside the circle */
 .about__circle-img-wrap {
   position: relative;
   z-index: 2;
@@ -183,7 +187,6 @@
   filter: saturate(0.85) brightness(0.9);
   transition: filter 0.4s ease;
 }
-
 .about__circle-img:hover {
   filter: saturate(1.1) brightness(1.05);
 }
@@ -206,37 +209,33 @@
   50%       { transform: translateX(-50%) scaleX(0.8); opacity: 0.4; }
 }
 
-/* ── Text ── */
-.about__text {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about__text.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
+/* ════════════════════════════════
+   TEXT
+════════════════════════════════ */
 .about__label {
-  display: block;
-  font-family: var(--font-body, 'Exo 2', sans-serif);
-  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--clr-accent, #00e5ff);
-  margin-bottom: 1.2rem;
+  color: var(--clr-sky);
+  background: rgba(79, 195, 247, 0.1);
+  border: 1px solid rgba(79, 195, 247, 0.3);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  margin-bottom: 1.4rem;
 }
 
 .about__heading {
-  font-family: var(--font-display, 'Orbitron', monospace);
+  font-family: var(--font-display);
   font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: 0.02em;
-  color: var(--clr-text, #cde4ff);
+  color: var(--clr-text);
   margin-bottom: 1.5rem;
 }
 
@@ -251,7 +250,7 @@
 .about__divider {
   width: 40px;
   height: 1px;
-  background: linear-gradient(90deg, var(--clr-accent, #00e5ff), transparent);
+  background: linear-gradient(90deg, var(--clr-accent), transparent);
   margin: 1.4rem 0;
   opacity: 0.7;
 }
@@ -260,12 +259,11 @@
   font-size: 0.95rem;
   font-weight: 300;
   line-height: 1.85;
-  color: var(--clr-muted, rgba(180, 210, 255, 0.65));
+  color: var(--clr-muted);
   max-width: 420px;
 }
-
 .about__body strong {
-  color: var(--clr-sky, #4fc3f7);
+  color: var(--clr-sky);
   font-weight: 500;
 }
 
@@ -282,7 +280,6 @@
   gap: 0.15rem;
   position: relative;
 }
-
 .about__stat + .about__stat::before {
   content: '';
   position: absolute;
@@ -294,40 +291,69 @@
 }
 
 .about__stat-num {
-  font-family: var(--font-display, 'Orbitron', monospace);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--clr-accent, #00e5ff);
+  color: var(--clr-accent);
   filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.4));
 }
-
 .about__stat-label {
   font-size: 0.72rem;
   font-weight: 400;
-  color: var(--clr-muted, rgba(180, 210, 255, 0.65));
+  color: var(--clr-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-/* ── Responsive ── */
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 1100px) {
+  .about { padding: 80px 2rem; }
+  .about__content { gap: 3rem; }
+}
+
 @media (max-width: 900px) {
+  .about { padding: 80px 1.75rem; }
+
   .about__content {
     grid-template-columns: 1fr;
-    padding: 0 1.75rem;
     text-align: center;
     gap: 2.5rem;
   }
 
-  .about__body { max-width: 100%; }
-
-  .about__stats { justify-content: center; }
-
-  .about__visual { order: -1; }
-
-  .about__circle-wrapper { width: 260px; height: 260px; }
-  .about__circle-img-wrap { width: 200px; height: 200px; }
-  .about__circle-ring--1 { width: 250px; height: 250px; }
-  .about__circle-ring--2 { width: 310px; height: 310px; }
-
+  .about__body    { max-width: 100%; }
+  .about__stats   { justify-content: center; }
+  .about__visual  { order: -1; }
   .about__divider { margin-inline: auto; }
+  .about__label   { margin-inline: auto; }
+
+  .about__circle-wrapper  { width: 260px; height: 260px; }
+  .about__circle-img-wrap { width: 200px; height: 200px; }
+  .about__circle-ring--1  { width: 250px; height: 250px; }
+  .about__circle-ring--2  { width: 310px; height: 310px; }
+}
+
+@media (max-width: 599px) {
+  .about { padding: 60px 1.25rem; }
+
+  .about__heading   { font-size: clamp(1.5rem, 7vw, 2rem); }
+  .about__body      { font-size: 0.88rem; }
+  .about__stats     { gap: 1.5rem; flex-wrap: wrap; }
+  .about__stat-num  { font-size: 1.25rem; }
+
+  .about__circle-wrapper  { width: 210px; height: 210px; }
+  .about__circle-img-wrap { width: 165px; height: 165px; }
+  .about__circle-ring--1  { width: 200px; height: 200px; }
+  .about__circle-ring--2  { width: 255px; height: 255px; }
+}
+
+@media (max-width: 390px) {
+  .about { padding: 50px 1rem; }
+  .about__heading { font-size: clamp(1.3rem, 8vw, 1.7rem); }
+
+  .about__circle-wrapper  { width: 180px; height: 180px; }
+  .about__circle-img-wrap { width: 140px; height: 140px; }
+  .about__circle-ring--1  { width: 170px; height: 170px; }
+  .about__circle-ring--2  { width: 215px; height: 215px; }
 }
