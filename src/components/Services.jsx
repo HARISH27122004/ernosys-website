@@ -97,7 +97,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section className="svc" id="services">
+    <section className="svc" id="service">
       {/* Background */}
       <div className="svc__bg" aria-hidden="true">
         <div className="svc__bg-grid" />

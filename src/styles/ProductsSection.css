@@ -1,5 +1,5 @@
 /* ── Google Fonts — add to your index.html ──────────────────────────────────
-   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 */
 
 /* ═══════════════════════════════════════════
@@ -8,57 +8,111 @@
 :root {
   --ps-cyan:        #00d4ff;
   --ps-cyan-glow:   rgba(0, 212, 255, 0.25);
-  --ps-cyan-border: rgba(0, 212, 255, 0.55);
-  --ps-card-bg:     rgba(6, 18, 42, 0.82);
+  --ps-cyan-border: rgba(79, 195, 247, 0.35);
+  --ps-card-bg:     rgba(255, 255, 255, 0.06);
   --ps-white:       #ffffff;
-  --ps-muted:       rgba(255, 255, 255, 0.70);
+  --ps-muted:       rgba(180, 210, 255, 0.65);
   --ps-navy:        #020c1b;
+  --ps-sky:         #4fc3f7;
+  --ps-accent:      #00e5ff;
+  --ps-text:        #cde4ff;
 }
 
 /* ═══════════════════════════════════════════
-   SECTION
+   SECTION — dark navy base (never transparent)
 ═══════════════════════════════════════════ */
 .ps-section {
   position: relative;
   padding: 90px 48px 100px;
   overflow: hidden;
   font-family: 'Exo 2', sans-serif;
-
-  /* ── DARK NAVY BASE — never transparent ── */
   background-color: #050916 !important;
 
-  /* ── GRID LINES over solid dark base ── */
+  /* Base grid — always visible through all overlay layers */
   background-image:
-    linear-gradient(rgba(0, 190, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 190, 255, 0.06) 1px, transparent 1px) !important;
-  background-size: 60px 60px !important;
+    linear-gradient(rgba(79, 195, 247, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px) !important;
+  background-size: 52px 52px !important;
   background-repeat: repeat !important;
 }
 
-/* ── Radial depth glows — absolutely positioned so they
-      never affect the base colour ── */
+/* ── Masked / faded grid layer (hero-style radial fade) ── */
+.ps-bg-mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(79, 195, 247, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 195, 247, 0.055) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 100%);
+}
+
+/* ── Directional depth glows (hero top/corner style) ── */
 .ps-overlay-dark {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 110% 60% at 50% -5%,  rgba(0, 55, 130, 0.50) 0%, transparent 65%),
-    radial-gradient(ellipse  55% 40% at 85% 90%,  rgba(0, 25,  75, 0.30) 0%, transparent 60%),
-    radial-gradient(ellipse  45% 35% at 10% 85%,  rgba(0, 25,  75, 0.20) 0%, transparent 55%);
   z-index: 0;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse 110% 60% at 50% -5%,  rgba(0, 55, 130, 0.50)  0%, transparent 65%),
+    radial-gradient(ellipse  55% 40% at 85% 90%,  rgba(0, 25,  75, 0.30)  0%, transparent 60%),
+    radial-gradient(ellipse  45% 35% at 10% 85%,  rgba(0, 25,  75, 0.20)  0%, transparent 55%);
 }
 
-/* ── Subtle centre glow behind the cards ── */
+/* ── Hero-style corner glows ── */
+.ps-glow-left {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: -150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1565c0, transparent 70%);
+  filter: blur(90px);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ps-glow-right {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -80px;
+  right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00b0ff, transparent 70%);
+  filter: blur(90px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Nebula atmospheric layer (from hero) ── */
+.ps-overlay-nebula {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 40% 30% at 70% 30%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 20% 70%, rgba(21, 101, 192, 0.10) 0%, transparent 70%);
+}
+
+/* ── Subtle centre glow behind cards ── */
 .ps-overlay-glow {
   position: absolute;
   inset: 0;
+  pointer-events: none;
+  z-index: 0;
   background: radial-gradient(
     ellipse 65% 45% at 50% 60%,
     rgba(0, 140, 255, 0.07) 0%,
     transparent 70%
   );
-  z-index: 0;
-  pointer-events: none;
 }
 
 /* ── Particle canvas ── */
@@ -85,13 +139,17 @@
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(26px, 3.6vw, 42px);
   font-weight: 700;
-  color: #ffffff;
+  color: var(--ps-text);
   letter-spacing: 0.02em;
   margin: 0;
 }
 
 .ps-heading-accent {
-  color: var(--ps-cyan);
+  background: linear-gradient(90deg, #a8d8ff, #00e5ff, #4fc3f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.35));
 }
 
 .ps-subheading {
@@ -118,8 +176,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   PRODUCT CARD — named grid rows for
-   pixel-perfect alignment across all 3 cards
+   PRODUCT CARD
 ═══════════════════════════════════════════ */
 .ps-card {
   display: grid;
@@ -129,13 +186,18 @@
     [title] auto
     [desc]  1fr;
 
-  background: var(--ps-card-bg);
-  border: 1.5px solid var(--ps-cyan-border);
+  /* Hero-style glass card */
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(79, 195, 247, 0.28);
   border-radius: 18px;
   padding: 32px 28px 36px;
 
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 8px 32px rgba(21, 101, 192, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
 
   position: relative;
   overflow: hidden;
@@ -153,10 +215,10 @@
   position: absolute;
   top: 0; left: 0;
   width: 56px; height: 56px;
-  border-top: 2px solid var(--ps-cyan);
-  border-left: 2px solid var(--ps-cyan);
+  border-top: 2px solid var(--ps-accent);
+  border-left: 2px solid var(--ps-accent);
   border-radius: 18px 0 0 0;
-  opacity: 0.65;
+  opacity: 0.45;
   transition: opacity 0.3s;
   pointer-events: none;
 }
@@ -166,10 +228,10 @@
   position: absolute;
   bottom: 0; right: 0;
   width: 56px; height: 56px;
-  border-bottom: 2px solid var(--ps-cyan);
-  border-right: 2px solid var(--ps-cyan);
+  border-bottom: 2px solid var(--ps-accent);
+  border-right: 2px solid var(--ps-accent);
   border-radius: 0 0 18px 0;
-  opacity: 0.65;
+  opacity: 0.45;
   transition: opacity 0.3s;
   pointer-events: none;
   display: block;
@@ -179,8 +241,9 @@
   transform: translateY(-10px);
   box-shadow:
     0 0 52px var(--ps-cyan-glow),
-    0 24px 48px rgba(0, 0, 0, 0.6);
-  border-color: var(--ps-cyan);
+    0 24px 48px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  border-color: rgba(79, 195, 247, 0.65);
 }
 
 .ps-card:hover::before,
@@ -200,7 +263,7 @@
   position: absolute;
   left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent);
   top: -10%;
   animation: ps-scan 4.5s linear infinite;
   pointer-events: none;
@@ -216,8 +279,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
   border-radius: 30px;
   padding: 5px 14px 5px 7px;
   margin-bottom: 26px;
@@ -228,7 +291,7 @@
 .ps-logo-icon {
   width: 26px; height: 26px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0055bb, #00d4ff);
+  background: linear-gradient(135deg, #1565c0, #00d4ff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,7 +306,7 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 8.5px;
   font-weight: 600;
-  color: var(--ps-cyan);
+  color: var(--ps-sky);
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -263,7 +326,7 @@
 
 .ps-card-icon svg {
   width: 100%; height: 100%;
-  filter: drop-shadow(0 0 8px rgba(0,212,255,0.75));
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.75));
 }
 
 /* ═══════════════════════════════════════════
@@ -275,7 +338,7 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 15.5px;
   font-weight: 600;
-  color: var(--ps-cyan);
+  color: var(--ps-sky);
   letter-spacing: 0.03em;
   margin: 0 0 14px;
   line-height: 1.4;
@@ -287,16 +350,15 @@
    CARD DESC — grid row: desc
 ═══════════════════════════════════════════ */
 .ps-card-desc {
-    grid-row: desc;
-    align-self: start;
-    font-size: 13.5px;
-    /* font-weight: 700; */
-    color:white;
-    line-height: 1.8;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-    font-weight: 800;
+  grid-row: desc;
+  align-self: start;
+  font-size: 13.5px;
+  font-weight: 300;
+  color: var(--ps-muted);
+  line-height: 1.8;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* ═══════════════════════════════════════════
@@ -309,23 +371,22 @@
 }
 
 .ps-btn {
-    display: inline-block;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 13.5px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #f7f9f9;
-    padding: 14px 52px;
-    border: 1.5px solid var(--ps-cyan-border);
-    border-radius: 6px;
-    background: rgb(21 22 22 / 63%);
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    transition: color 0.28s ease, box-shadow 0.28s ease;
-
+  display: inline-block;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ps-text);
+  padding: 14px 52px;
+  border: 1.5px solid rgba(79, 195, 247, 0.45);
+  border-radius: 6px;
+  background: rgba(21, 22, 22, 0.63);
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.28s ease, box-shadow 0.28s ease;
 }
 
 .ps-btn span {
@@ -337,7 +398,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--ps-cyan);
+  background: var(--ps-sky);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -351,6 +412,17 @@
 
 .ps-btn:hover::before {
   transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION OUTER WRAPPER (optional)
+═══════════════════════════════════════════ */
+.SectionOuter {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 25px;
+  border-radius: 10px;
 }
 
 /* ═══════════════════════════════════════════
@@ -380,32 +452,28 @@
     align-self: unset;
     justify-self: unset;
   }
+
+  .ps-glow-left {
+    width: 360px;
+    height: 360px;
+    top: -60px;
+    left: -80px;
+  }
+
+  .ps-glow-right {
+    width: 300px;
+    height: 300px;
+    bottom: -40px;
+    right: -60px;
+  }
 }
 
 @media (max-width: 480px) {
   .ps-heading    { font-size: 22px; }
   .ps-subheading { font-size: 13.5px; }
-}
-.SectionOuter {
-  background: url('https://images.stockcake.com/public/3/6/b/36b2787c-b08b-468f-be6c-7c256b0a0286_large/futuristic-robot-portrait-stockcake.jpg');
-  background-size: cover;      /* Fill the entire div */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat;/* Prevent repeating */
-  padding: 25px;
-  border-radius: 10px;
-}
-.ps-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
-  border-radius: 24px;
-
-  box-shadow:
-    0 8px 32px rgba(31, 38, 135, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3);
-
-  padding: 24px;
+  .ps-btn {
+    padding: 12px 36px;
+    font-size: 12px;
+  }
 }

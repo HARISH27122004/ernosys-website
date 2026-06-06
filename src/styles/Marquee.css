@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Exo+2:wght@300;400;500;600&display=swap');
+
+:root {
+  --clr-bg:     #050916;
+  --clr-navy:   #080f2e;
+  --clr-accent: #00e5ff;
+  --clr-sky:    #4fc3f7;
+  --clr-text:   #cde4ff;
+  --font-display: 'Orbitron', monospace;
+}
+
+/* ── Wrapper ── */
+.marquee {
+  position: relative;
+  width: 100%;
+  background: var(--clr-navy);
+  border-top:    1px solid rgba(79, 195, 247, 0.15);
+  border-bottom: 1px solid rgba(79, 195, 247, 0.15);
+  padding: 18px 0;
+  overflow: hidden;
+}
+
+/* ── Fade edges (left & right) ── */
+.marquee__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee__fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--clr-navy) 0%, transparent 100%);
+}
+
+.marquee__fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--clr-navy) 0%, transparent 100%);
+}
+
+/* ── Scrolling track ── */
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Text items ── */
+.marquee__item {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  padding: 0 2rem;
+
+  /* Outline / stroke effect matching screenshot */
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(180, 210, 255, 0.35);
+  text-stroke: 1.5px rgba(180, 210, 255, 0.35);
+
+  transition: -webkit-text-stroke-color 0.3s;
+}
+
+.marquee__item:hover {
+  -webkit-text-stroke-color: var(--clr-accent);
+  color: transparent;
+}
+
+/* ── Star separator ── */
+.marquee__star {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.7));
+}
+
+/* ── Responsive ── */
+@media (max-width: 599px) {
+  .marquee__item {
+    font-size: 0.9rem;
+    padding: 0 1.2rem;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  .marquee__star {
+    width: 18px;
+    height: 18px;
+  }
+
+  .marquee__fade {
+    width: 60px;
+  }
+}

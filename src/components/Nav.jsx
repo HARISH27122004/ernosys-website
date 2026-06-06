@@ -42,6 +42,13 @@ const Nav = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /* ── Smooth scroll ── */
+  const handleNavClick = (e, item) => {
+    e.preventDefault();
+    const target = document.getElementById(item.toLowerCase());
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   /* ── Initial GSAP states ── */
   useEffect(() => {
     gsap.set(navWrapRef.current, { display: 'none' });
@@ -246,10 +253,9 @@ const Nav = () => {
                     href={`#${item.toLowerCase()}`}
                     className="m-list__link"
                     ref={(el) => { if (el) menuLinksRef.current[i] = el; }}
-                    onClick={closeMenu}
+                    onClick={(e) => { handleNavClick(e, item); closeMenu(); }}
                   >
                     <p className="m-list__heading">{item}</p>
-                    {/* <p className="m-list__num">0{i + 1}</p> */}
                     <div className="m-link-bg" />
                   </a>
                 </li>

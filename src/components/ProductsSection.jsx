@@ -166,7 +166,7 @@ const ProductsSection = () => {
   useParticles(canvasRef);
 
   return (
-    <section className="ps-section">
+    <section className="ps-section" id="products">
       {/* Layer 0 — radial blue glows */}
       <div className="ps-overlay-dark" />
       {/* Layer 1 — centre card glow */}

@@ -54,7 +54,7 @@ const Socials = [
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" id="contact">
       {/* Background layers */}
       <div className="footer__bg" aria-hidden="true">
         <div className="footer__bg-grid" />
