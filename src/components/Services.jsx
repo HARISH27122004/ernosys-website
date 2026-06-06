@@ -1,161 +1,185 @@
-import { useEffect, useRef } from 'react';
-import '../styles/Services.css';
+import { useRef, useState, useEffect } from "react";
+import "../styles/Services.css";
 
-const services = [
+// ── Services content plugged into the AboutUs card structure ──
+const products = [
   {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
-      </svg>
-    ),
-    title: 'Robotics Starter Kits',
-    body: 'Beginner-friendly kits that introduce children to robotics with step-by-step guided assembly and fun challenges.',
-    tag: 'Ages 5–8',
-    accent: '#00e5ff',
+    id: "01",
+    name: "STARTER KITS",
+    subtitle: "ROBOTICS FOR BEGINNERS",
+    image: "https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=800&q=80",
+    desc: "Beginner-friendly kits that introduce children to robotics with step-by-step guided assembly and fun challenges.",
   },
   {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="12" cy="12" r="4" />
-        <line x1="12" y1="2" x2="12" y2="8" />
-        <line x1="12" y1="16" x2="12" y2="22" />
-        <line x1="2" y1="12" x2="8" y2="12" />
-        <line x1="16" y1="12" x2="22" y2="12" />
-      </svg>
-    ),
-    title: 'Space Science Explorer',
-    body: 'Interactive models of the solar system, planetary motion, and space exploration concepts built to spark curiosity.',
-    tag: 'Ages 8–11',
-    accent: '#4fc3f7',
+    id: "02",
+    name: "SPACE EXPLORER",
+    subtitle: "SPACE SCIENCE SERIES",
+    image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&q=80",
+    desc: "Interactive models of the solar system, planetary motion, and space exploration concepts built to spark curiosity.",
   },
   {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" />
-        <path d="M8 21h8M12 17v4" />
-        <path d="M7 8h.01M11 8h6M7 12h3M14 12h3" />
-      </svg>
-    ),
-    title: 'Coding & Programming',
-    body: 'Block-based and text-based programming kits that teach logic, loops, and problem-solving through robotics play.',
-    tag: 'Ages 10–14',
-    accent: '#00e5ff',
+    id: "03",
+    name: "CODE & PLAY",
+    subtitle: "CODING & PROGRAMMING",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+    desc: "Block-based and text-based programming kits that teach logic, loops, and problem-solving through robotics play.",
   },
   {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    ),
-    title: 'STEM Workshop Kits',
-    body: 'Classroom-ready kits with teacher guides, group activities, and curriculum-aligned experiments for schools.',
-    tag: 'Schools',
-    accent: '#4fc3f7',
-  },
-  {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
-    title: 'Advanced Rover Series',
-    body: 'Programmable lunar and Mars rover models with sensors, motors, and obstacle avoidance for advanced learners.',
-    tag: 'Ages 12–14',
-    accent: '#00e5ff',
-  },
-  {
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    title: 'Parent & Teacher Training',
-    body: 'Guided training sessions and resource packs helping parents and educators get the most out of every kit.',
-    tag: 'Educators',
-    accent: '#4fc3f7',
+    id: "04",
+    name: "ROVER SERIES",
+    subtitle: "ADVANCED ROVER BUILDS",
+    image: "https://images.unsplash.com/photo-1614315517650-3771cf72d18a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cm92ZXIlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
+    desc: "Programmable lunar and Mars rover models with sensors, motors, and obstacle avoidance for advanced learners.",
   },
 ];
 
-export default function Services() {
-  const cardsRef = useRef([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add('svc__card--visible');
-      }),
-      { threshold: 0.12 }
-    );
-    cardsRef.current.forEach((c) => c && observer.observe(c));
-    return () => observer.disconnect();
-  }, []);
+const Particles = () => {
+  const particles = Array.from({ length: 28 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    duration: Math.random() * 14 + 8,
+    delay: Math.random() * 8,
+    opacity: Math.random() * 0.5 + 0.15,
+  }));
 
   return (
-    <section className="svc" id="service">
-      {/* Background */}
-      <div className="svc__bg" aria-hidden="true">
-        <div className="svc__bg-grid" />
-        <div className="svc__bg-glow svc__bg-glow--left" />
-        <div className="svc__bg-glow svc__bg-glow--right" />
-        <div className="svc__bg-nebula" />
+    <div className="au__particles" aria-hidden="true">
+      {particles.map((p) => (
+        <span
+          key={p.id}
+          className="au__particle"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            opacity: p.opacity,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+function ProductCard({ product, isActive, onClick }) {
+  return (
+    <div
+      className={`au-card ${isActive ? "au-card--active" : ""}`}
+      onClick={() => onClick(product.id)}
+    >
+      <div className="au-card__top-bar" />
+      <div className="au-card__num">/{product.id}</div>
+
+      <div className="au-card__label">
+        <h3 className="au-card__name">{product.name}</h3>
+        <p className="au-card__subtitle">{product.subtitle}</p>
       </div>
 
-      <div className="svc__container">
+      <div className="au-card__image-wrap">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="au-card__img"
+          loading="lazy"
+        />
+        <div className="au-card__overlay">
+          <div className="au-card__overlay-inner">
+            <span className="au-card__overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
+            <span>View {product.name}</span>
+          </div>
+          <p className="au-card__desc">{product.desc}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Header */}
-        <div className="svc__header">
-          <span className="svc__label">What We Offer</span>
-          <h2 className="svc__heading">
-            Our <span className="svc__heading--accent">Services</span>
-          </h2>
-          <p className="svc__subtext">
-            Explore our hands-on robotics kits and training programs designed to
-            empower young learners and educators alike.
+export default function Services() {
+  const scrollRef = useRef(null);
+  const [activeId, setActiveId] = useState(null);
+  const [canScrollLeft,  setCanScrollLeft]  = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const updateScrollState = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateScrollState, { passive: true });
+    updateScrollState();
+    return () => el.removeEventListener("scroll", updateScrollState);
+  }, []);
+
+  const scroll = (dir) => {
+    scrollRef.current?.scrollBy({ left: dir * 380, behavior: "smooth" });
+  };
+
+  return (
+    <section className="au" id="service">
+      {/* Background */}
+      <div className="au__bg">
+        <div className="au__bg-grid" />
+        <div className="au__bg-glow au__bg-glow--left" />
+        <div className="au__bg-glow au__bg-glow--right" />
+        <div className="au__bg-nebula" />
+      </div>
+
+      <Particles />
+
+      {/* Corner brackets */}
+      <span className="au__corner au__corner--tl" />
+      <span className="au__corner au__corner--tr" />
+      <span className="au__corner au__corner--bl" />
+      <span className="au__corner au__corner--br" />
+
+      <div className="au__inner">
+        {/* ── LEFT PANEL ── */}
+        <div className="au__left">
+          <p className="au__body">
+            RoboSpark delivers <strong>hands-on robotics kits &amp; STEM programs</strong> built
+            for young learners aged 5–14. Our curriculum-aligned products ensure
+            creative exploration, logical thinking, and a genuine passion for
+            science and technology from an early age.
           </p>
+
+          <div className="au__tag">
+            Hands-On Learning &nbsp;·&nbsp; Ages 5–14
+          </div>
+
+          <h2 className="au__heading">
+            EXPLORE OUR
+            <span className="au__heading--accent">SERVICES</span>
+          </h2>
         </div>
 
-        {/* Cards */}
-        <div className="svc__grid">
-          {services.map((s, i) => (
-            <div
-              key={s.title}
-              className="svc__card"
-              ref={(el) => (cardsRef.current[i] = el)}
-              style={{ '--delay': `${i * 0.07}s`, '--accent': s.accent }}
-            >
-              <div className="svc__card-glow" />
-              <div className="svc__icon">{s.icon}</div>
-              <span className="svc__tag">{s.tag}</span>
-              <h3 className="svc__card-title">{s.title}</h3>
-              <p className="svc__card-body">{s.body}</p>
-              <div className="svc__card-footer">
-                <span className="svc__learn">
-                  Learn more
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          ))}
+        {/* ── SCROLL TRACK ── */}
+        <div className="au__scroll-track" ref={scrollRef}>
+          <div className="au__cards">
+            {products.map((p) => (
+              <ProductCard
+                key={p.id}
+                product={p}
+                isActive={activeId === p.id}
+                onClick={(id) => setActiveId(activeId === id ? null : id)}
+              />
+            ))}
+          </div>
         </div>
-
-        {/* CTA */}
-        <div className="svc__cta-wrap">
-          <button className="svc__cta">
-            <span>View All Services</span>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-
       </div>
     </section>
   );

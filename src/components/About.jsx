@@ -1,10 +1,28 @@
+import { useRef, useEffect } from 'react';
 import '../styles/About.css';
+import miniRobot from '../images/miniRobot.png'
 
 export default function About() {
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    let frame;
+    let angle = 0;
+    const animate = () => {
+      angle += 0.012;
+      if (imgRef.current) {
+        imgRef.current.style.transform = `translateY(${Math.sin(angle) * 12}px)`;
+      }
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <section id="about" className="about">
 
-      {/* ── Background — identical structure to AboutUs ── */}
+      {/* ── Background ── */}
       <div className="about__bg">
         <div className="about__bg-grid" />
         <div className="about__bg-glow about__bg-glow--left" />
@@ -34,20 +52,20 @@ export default function About() {
       {/* ── Content ── */}
       <div className="about__content">
 
-        {/* Left — robot in glowing circle */}
+        {/* Left — hero-style floating image */}
         <div className="about__visual">
-          <div className="about__circle-wrapper">
-            <div className="about__circle-glow" />
-            <div className="about__circle-ring about__circle-ring--1" />
-            <div className="about__circle-ring about__circle-ring--2" />
-            <div className="about__circle-img-wrap">
+          <div className="about__img-wrapper">
+            <div className="about__img-glow" />
+            <div className="about__img-ring about__img-ring--1" />
+            <div className="about__img-ring about__img-ring--2" />
+            <div className="about__img-float" ref={imgRef}>
               <img
-                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80"
+                src={miniRobot}
                 alt="Educational robotics"
-                className="about__circle-img"
+                className="about__img"
               />
             </div>
-            <div className="about__circle-shadow" />
+            <div className="about__img-shadow" />
           </div>
         </div>
 

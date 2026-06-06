@@ -13,7 +13,7 @@
 .marquee {
   position: relative;
   width: 100%;
-  background: var(--clr-navy);
+  background: #050916;
   border-top:    1px solid rgba(79, 195, 247, 0.15);
   border-bottom: 1px solid rgba(79, 195, 247, 0.15);
   padding: 18px 0;

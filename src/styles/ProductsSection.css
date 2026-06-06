@@ -1,4 +1,4 @@
-/* ── Google Fonts — add to your index.html ──────────────────────────────────
+/* ── Google Fonts ────────────────────────────────────────────────────────────
    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 */
 
@@ -19,100 +19,66 @@
 }
 
 /* ═══════════════════════════════════════════
-   SECTION — dark navy base (never transparent)
+   SECTION
 ═══════════════════════════════════════════ */
 .ps-section {
   position: relative;
   padding: 90px 48px 100px;
   overflow: hidden;
   font-family: 'Exo 2', sans-serif;
-  background-color: #050916 !important;
+  background-color: #050916;
+}
 
-  /* Base grid — always visible through all overlay layers */
+/* ═══════════════════════════════════════════
+   HERO-STYLE BACKGROUND LAYERS
+═══════════════════════════════════════════ */
+.ps-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ps-bg-grid {
+  position: absolute;
+  inset: 0;
   background-image:
     linear-gradient(rgba(79, 195, 247, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px) !important;
-  background-size: 52px 52px !important;
-  background-repeat: repeat !important;
-}
-
-/* ── Masked / faded grid layer (hero-style radial fade) ── */
-.ps-bg-mask {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(79, 195, 247, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 195, 247, 0.055) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px);
   background-size: 52px 52px;
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
 }
 
-/* ── Directional depth glows (hero top/corner style) ── */
-.ps-overlay-dark {
+.ps-bg-glow {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 110% 60% at 50% -5%,  rgba(0, 55, 130, 0.50)  0%, transparent 65%),
-    radial-gradient(ellipse  55% 40% at 85% 90%,  rgba(0, 25,  75, 0.30)  0%, transparent 60%),
-    radial-gradient(ellipse  45% 35% at 10% 85%,  rgba(0, 25,  75, 0.20)  0%, transparent 55%);
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
 }
 
-/* ── Hero-style corner glows ── */
-.ps-glow-left {
-  position: absolute;
+.ps-bg-glow--left {
   width: 600px;
   height: 600px;
   top: -100px;
   left: -150px;
-  border-radius: 50%;
   background: radial-gradient(circle, #1565c0, transparent 70%);
-  filter: blur(90px);
-  opacity: 0.22;
-  pointer-events: none;
-  z-index: 0;
 }
 
-.ps-glow-right {
-  position: absolute;
+.ps-bg-glow--right {
   width: 500px;
   height: 500px;
   bottom: -80px;
   right: -100px;
-  border-radius: 50%;
   background: radial-gradient(circle, #00b0ff, transparent 70%);
-  filter: blur(90px);
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
 }
 
-/* ── Nebula atmospheric layer (from hero) ── */
-.ps-overlay-nebula {
+.ps-bg-nebula {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: 0;
   background:
     radial-gradient(ellipse 40% 30% at 70% 30%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
     radial-gradient(ellipse 30% 40% at 20% 70%, rgba(21, 101, 192, 0.10) 0%, transparent 70%);
-}
-
-/* ── Subtle centre glow behind cards ── */
-.ps-overlay-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    ellipse 65% 45% at 50% 60%,
-    rgba(0, 140, 255, 0.07) 0%,
-    transparent 70%
-  );
 }
 
 /* ── Particle canvas ── */
@@ -162,7 +128,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   CARDS WRAPPER — CSS Grid (equal heights)
+   CARDS WRAPPER
 ═══════════════════════════════════════════ */
 .ps-cards-wrapper {
   position: relative;
@@ -186,7 +152,6 @@
     [title] auto
     [desc]  1fr;
 
-  /* Hero-style glass card */
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(79, 195, 247, 0.28);
   border-radius: 18px;
@@ -209,7 +174,6 @@
     border-color 0.32s ease;
 }
 
-/* corner bracket — top left */
 .ps-card::before {
   content: '';
   position: absolute;
@@ -223,7 +187,6 @@
   pointer-events: none;
 }
 
-/* corner bracket — bottom right */
 .ps-corner-br {
   position: absolute;
   bottom: 0; right: 0;
@@ -252,7 +215,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   SCAN LINE ANIMATION
+   SCAN LINE
 ═══════════════════════════════════════════ */
 @keyframes ps-scan {
   0%   { top: -10%; }
@@ -271,7 +234,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   LOGO CHIP — grid row: logo
+   LOGO CHIP
 ═══════════════════════════════════════════ */
 .ps-card-logo {
   grid-row: logo;
@@ -312,7 +275,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   CARD ICON — grid row: icon
+   CARD ICON
 ═══════════════════════════════════════════ */
 .ps-card-icon {
   grid-row: icon;
@@ -330,7 +293,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   CARD TITLE — grid row: title
+   CARD TITLE
 ═══════════════════════════════════════════ */
 .ps-card-title {
   grid-row: title;
@@ -347,7 +310,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   CARD DESC — grid row: desc
+   CARD DESC
 ═══════════════════════════════════════════ */
 .ps-card-desc {
   grid-row: desc;
@@ -415,12 +378,11 @@
 }
 
 /* ═══════════════════════════════════════════
-   SECTION OUTER WRAPPER (optional)
+   SECTION OUTER
 ═══════════════════════════════════════════ */
 .SectionOuter {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: relative;
+  z-index: 2;
   padding: 25px;
   border-radius: 10px;
 }
@@ -453,14 +415,14 @@
     justify-self: unset;
   }
 
-  .ps-glow-left {
+  .ps-bg-glow--left {
     width: 360px;
     height: 360px;
     top: -60px;
     left: -80px;
   }
 
-  .ps-glow-right {
+  .ps-bg-glow--right {
     width: 300px;
     height: 300px;
     bottom: -40px;

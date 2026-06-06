@@ -1,4 +1,4 @@
-/* ── About Section — background mirrors AboutUs exactly ── */
+/* ── About Section ── */
 
 :root {
   --clr-bg:       #050916;
@@ -17,7 +17,7 @@
 ════════════════════════════════ */
 .about {
   position: relative;
-  background: var(--clr-bg);          /* #050916 — same as AboutUs .au */
+  background: var(--clr-bg);
   font-family: var(--font-body);
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
 }
 
 /* ════════════════════════════════
-   BACKGROUND LAYERS  (1:1 with .au__bg in AboutUs)
+   BACKGROUND LAYERS
 ════════════════════════════════ */
 .about__bg {
   position: absolute;
@@ -37,7 +37,6 @@
   z-index: 0;
 }
 
-/* Grid texture */
 .about__bg-grid {
   position: absolute;
   inset: 0;
@@ -46,9 +45,9 @@
     linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px);
   background-size: 52px 52px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%);
 }
 
-/* Ambient glows */
 .about__bg-glow {
   position: absolute;
   border-radius: 50%;
@@ -66,7 +65,6 @@
   background: radial-gradient(circle, #00b0ff, transparent 70%);
 }
 
-/* Nebula layer */
 .about__bg-nebula {
   position: absolute;
   inset: 0;
@@ -76,7 +74,7 @@
 }
 
 /* ════════════════════════════════
-   PARTICLES  (1:1 with .au particles in AboutUs)
+   PARTICLES
 ════════════════════════════════ */
 .about__particles {
   position: absolute;
@@ -114,7 +112,7 @@
 }
 
 /* ════════════════════════════════
-   VISUAL — robot circle
+   VISUAL — hero-style image
 ════════════════════════════════ */
 .about__visual {
   display: flex;
@@ -122,16 +120,16 @@
   justify-content: center;
 }
 
-.about__circle-wrapper {
+.about__img-wrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 360px;
-  height: 360px;
+  width: 380px;
+  height: 420px;
 }
 
-.about__circle-glow {
+.about__img-glow {
   position: absolute;
   inset: 10%;
   border-radius: 50%;
@@ -144,18 +142,18 @@
   50%       { opacity: 1.2; transform: scale(1.08); }
 }
 
-.about__circle-ring {
+.about__img-ring {
   position: absolute;
   border-radius: 50%;
   border: 1px solid rgba(79, 195, 247, 0.2);
   animation: aboutSpinRing linear infinite;
 }
-.about__circle-ring--1 {
+.about__img-ring--1 {
   width: 340px; height: 340px;
   border-style: dashed;
   animation-duration: 28s;
 }
-.about__circle-ring--2 {
+.about__img-ring--2 {
   width: 420px; height: 420px;
   border-color: rgba(0, 229, 255, 0.1);
   animation-duration: 20s;
@@ -166,39 +164,26 @@
   to { transform: rotate(360deg); }
 }
 
-.about__circle-img-wrap {
+.about__img-float {
   position: relative;
   z-index: 2;
+}
+
+.about__img {
   width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(0, 229, 255, 0.3);
-  box-shadow:
-    0 0 40px rgba(0, 229, 255, 0.15),
-    0 0 0 1px rgba(79, 195, 247, 0.1),
-    inset 0 0 30px rgba(0, 0, 0, 0.5);
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(0, 229, 255, 0.35));
+  display: block;
 }
 
-.about__circle-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.85) brightness(0.9);
-  transition: filter 0.4s ease;
-}
-.about__circle-img:hover {
-  filter: saturate(1.1) brightness(1.05);
-}
-
-.about__circle-shadow {
+.about__img-shadow {
   position: absolute;
-  bottom: -16px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 160px;
-  height: 28px;
-  background: radial-gradient(ellipse, rgba(0, 229, 255, 0.25) 0%, transparent 70%);
+  width: 140px;
+  height: 24px;
+  background: radial-gradient(ellipse, rgba(0, 229, 255, 0.3) 0%, transparent 70%);
   border-radius: 50%;
   z-index: 1;
   animation: aboutShadowPulse 3s ease-in-out infinite;
@@ -328,10 +313,10 @@
   .about__divider { margin-inline: auto; }
   .about__label   { margin-inline: auto; }
 
-  .about__circle-wrapper  { width: 260px; height: 260px; }
-  .about__circle-img-wrap { width: 200px; height: 200px; }
-  .about__circle-ring--1  { width: 250px; height: 250px; }
-  .about__circle-ring--2  { width: 310px; height: 310px; }
+  .about__img-wrapper { width: 260px; height: 290px; }
+  .about__img         { width: 200px; }
+  .about__img-ring--1 { width: 240px; height: 240px; }
+  .about__img-ring--2 { width: 300px; height: 300px; }
 }
 
 @media (max-width: 599px) {
@@ -342,18 +327,18 @@
   .about__stats     { gap: 1.5rem; flex-wrap: wrap; }
   .about__stat-num  { font-size: 1.25rem; }
 
-  .about__circle-wrapper  { width: 210px; height: 210px; }
-  .about__circle-img-wrap { width: 165px; height: 165px; }
-  .about__circle-ring--1  { width: 200px; height: 200px; }
-  .about__circle-ring--2  { width: 255px; height: 255px; }
+  .about__img-wrapper { width: 220px; height: 250px; }
+  .about__img         { width: 170px; }
+  .about__img-ring--1 { width: 200px; height: 200px; }
+  .about__img-ring--2 { width: 255px; height: 255px; }
 }
 
 @media (max-width: 390px) {
   .about { padding: 50px 1rem; }
   .about__heading { font-size: clamp(1.3rem, 8vw, 1.7rem); }
 
-  .about__circle-wrapper  { width: 180px; height: 180px; }
-  .about__circle-img-wrap { width: 140px; height: 140px; }
-  .about__circle-ring--1  { width: 170px; height: 170px; }
-  .about__circle-ring--2  { width: 215px; height: 215px; }
+  .about__img-wrapper { width: 180px; height: 200px; }
+  .about__img         { width: 140px; }
+  .about__img-ring--1 { width: 165px; height: 165px; }
+  .about__img-ring--2 { width: 210px; height: 210px; }
 }

@@ -6,7 +6,7 @@ import About from './components/About';
 import Features from './components/Features';
 import Services from './components/Services';
 import Gallery from './components/Gallery';
-import AboutUs from './components/AboutUs';
+import AboutUs from './components/Services';
 import ProductsSection from './components/ProductsSection';
 import Marquee from './components/Marquee';
 import FAQ from './components/FAQ';
@@ -17,14 +17,14 @@ export default function App() {
     <>
       <Nav />
       <Hero />
-      <AboutUs/>
       <Gallery />
       <About />
       <Features />
-      <Services />
+      {/* <Services /> */}
+      <AboutUs />
       <ProductsSection />
-      <FAQ/>
       <Marquee />
+      <FAQ />
       <Footer />
     </>
   );

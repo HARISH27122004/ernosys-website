@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
+import { useNavigate} from "react-router-dom";
 import "../styles/ProductsSection.css";
 
 /* ─────────────────────────────────────────────────────
-   Canvas particle hook — glowing star dots drifting
-   upward, matching the Ernosys hero background
+   Canvas particle hook — matching hero particles (#4fc3f7)
 ───────────────────────────────────────────────────── */
 const useParticles = (canvasRef) => {
   useEffect(() => {
@@ -13,54 +13,50 @@ const useParticles = (canvasRef) => {
 
     let animId;
     let W, H;
-    const TOTAL = 80;
+    const TOTAL = 28;
     const particles = [];
 
     const resize = () => {
       W = canvas.width  = canvas.offsetWidth;
       H = canvas.height = canvas.offsetHeight;
     };
+    
 
     const init = () => {
       particles.length = 0;
       for (let i = 0; i < TOTAL; i++) {
         particles.push({
-          x:            Math.random() * W,
-          y:            Math.random() * H,
-          r:            Math.random() * 1.4 + 0.3,
-          alpha:        Math.random() * 0.55 + 0.15,
-          speed:        Math.random() * 0.18 + 0.04,
-          twinkle:      Math.random() * Math.PI * 2,
-          twinkleSpeed: Math.random() * 0.022 + 0.005,
+          x:        Math.random() * W,
+          y:        Math.random() * H,
+          size:     Math.random() * 3 + 1,
+          duration: Math.random() * 14 + 8,
+          delay:    Math.random() * 8,
+          opacity:  Math.random() * 0.5 + 0.15,
+          phase:    Math.random() * Math.PI * 2,
+          speed:    Math.random() * 0.007 + 0.003,
         });
       }
     };
 
+    let tick = 0;
     const draw = () => {
+      tick++;
       ctx.clearRect(0, 0, W, H);
       particles.forEach((p) => {
-        p.twinkle += p.twinkleSpeed;
-        const a = p.alpha * (0.5 + 0.5 * Math.sin(p.twinkle));
+        const a = p.opacity * (0.5 + 0.5 * Math.sin(p.phase + tick * p.speed));
 
-        /* glow halo */
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3.5);
-        g.addColorStop(0,   `rgba(120,220,255,${a})`);
-        g.addColorStop(0.4, `rgba(60,180,255,${a * 0.45})`);
-        g.addColorStop(1,   `rgba(0,140,255,0)`);
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+        g.addColorStop(0,   `rgba(79,195,247,${a})`);
+        g.addColorStop(1,   `rgba(79,195,247,0)`);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 3.5, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
         ctx.fillStyle = g;
         ctx.fill();
 
-        /* bright core */
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210,245,255,${a})`;
+        ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(79,195,247,${a})`;
         ctx.fill();
-
-        /* drift upward, wrap */
-        p.y -= p.speed;
-        if (p.y < -6) { p.y = H + 6; p.x = Math.random() * W; }
       });
       animId = requestAnimationFrame(draw);
     };
@@ -167,36 +163,40 @@ const ProductsSection = () => {
 
   return (
     <section className="ps-section" id="products">
-      {/* Layer 0 — radial blue glows */}
-      <div className="ps-overlay-dark" />
-      {/* Layer 1 — centre card glow */}
-      <div className="ps-overlay-glow" />
-      {/* Layer 2 — animated particle dots */}
+      {/* Hero-style background layers */}
+      <div className="ps-bg" aria-hidden="true">
+        <div className="ps-bg-grid" />
+        <div className="ps-bg-glow ps-bg-glow--left" />
+        <div className="ps-bg-glow ps-bg-glow--right" />
+        <div className="ps-bg-nebula" />
+      </div>
+
+      {/* Animated particles */}
       <canvas ref={canvasRef} className="ps-particles" />
 
       {/* Content */}
       <div className="SectionOuter">
-      <div className="ps-header">
-        <h2 className="ps-heading">
-          Explore Our <span className="ps-heading-accent">Robotics Toys</span>
-        </h2>
-        <p className="ps-subheading">
-          Engaging hands-on products designed to teach students aged 5–14 about
-          space science through interactive play and learning.
-        </p>
-      </div>
+        <div className="ps-header">
+          <h2 className="ps-heading">
+            Explore Our <span className="ps-heading-accent">Robotics Toys</span>
+          </h2>
+          <p className="ps-subheading">
+            Engaging hands-on products designed to teach students aged 5–14 about
+            space science through interactive play and learning.
+          </p>
+        </div>
 
-      <div className="ps-cards-wrapper">
-        {products.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
-      </div>
+        <div className="ps-cards-wrapper">
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
+        </div>
 
-      <div className="ps-cta">
-        <a href="#" className="ps-btn">
-          <span>View All Products</span>
-        </a>
-      </div>
+        <div className="ps-cta">
+          <a href="/products" className="ps-btn">
+            <span>View All Products</span>
+          </a>
+        </div>
       </div>
     </section>
   );

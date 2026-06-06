@@ -1,0 +1,24 @@
+.back-btn {
+  position: fixed;   /* stays visible while scrolling */
+  top: 20px;
+  left: 20px;
+  z-index: 9999;     /* always on top */
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid #00d9ff;
+  border-radius: 8px;
+  color: #00d9ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(0, 217, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+}
