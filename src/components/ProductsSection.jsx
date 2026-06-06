@@ -158,7 +158,9 @@ const ProductCard = ({ title, description, icon, animationDelay }) => (
    Main section
 ───────────────────────────────────────────────────── */
 const ProductsSection = () => {
+
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
   useParticles(canvasRef);
 
   return (
@@ -193,9 +195,9 @@ const ProductsSection = () => {
         </div>
 
         <div className="ps-cta">
-          <a href="/products" className="ps-btn">
+          <button  className="ps-btn" onClick={()=> navigate("/products")}>
             <span>View All Products</span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
